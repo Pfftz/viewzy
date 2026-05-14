@@ -32,17 +32,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $customizations = $this->themeCustomizationRepository->orderBy('sort_order')->findWhere([
-            'status' => self::STATUS,
-            'channel_id' => core()->getCurrentChannel()->id,
-            'theme_code' => core()->getCurrentChannel()->theme,
-        ]);
-
         $categories = $this->categoryRepository->getVisibleCategoryTree(core()->getCurrentChannel()->root_category_id);
 
         $categories = CategoryTreeResource::collection($categories);
 
-        return view('shop::home.index', compact('customizations', 'categories'));
+        return view('shop::home.index', compact('categories'));
     }
 
     /**
